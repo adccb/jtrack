@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { Entry } from "./components/Entry";
+import { Controls } from "./components/Controls";
+import { useDataPoints } from "./hooks/useDataPoints";
 
-function App() {
+const App = () => {
+  const { dataPointsByDate } = useDataPoints();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Controls />
+
+      <hr />
+
+      {Object.entries(dataPointsByDate).map(([date, dataPoints]) => (
+        <section key={date}>
+          <h2>{date}</h2>
+
+          <ul>{dataPoints.map(Entry)}</ul>
+        </section>
+      ))}
     </div>
   );
-}
+};
 
 export default App;
